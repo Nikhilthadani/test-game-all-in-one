@@ -1,7 +1,7 @@
 const express = require("express");
 
 const app = express();
-app.get("/backend", (req, res) => {
+app.get("/", (req, res) => {
   res.send("<h1>OK</h1>");
 });
 
