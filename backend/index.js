@@ -1,8 +1,9 @@
-const http = require("http");
+const express = require("express");
 
-const server = http.createServer();
-server.on("request", (req, res) => {
-  res.end("SERVER OK!");
+const app = express();
+app.get("/backend", (req, res) => {
+  res.send("<h1>OK</h1>");
 });
+
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, "0.0.0.0");
+app.listen(PORT, () => console.log("SERVER OPEN"));
