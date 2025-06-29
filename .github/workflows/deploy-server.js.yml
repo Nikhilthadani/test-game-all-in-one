@@ -10,29 +10,30 @@ jobs:
 
     name: Deploy Backend
     runs-on: ubuntu-latest
+    environment: PROD
 
     steps:
       - name: ✅ Checkout Code
         uses: actions/checkout@v3
         # Checks out current commit from the backend branch
       - name: 🧪 Debug EC2 Host
-        run: echo "${{ secrets.PROD.EC2_HOST }}"
+        run: echo "${{ secrets.EC2_HOST }}"
       - name: 🔐 Setup SSH Access
         run: |
           mkdir -p ~/.ssh                         # Create SSH folder on GitHub runner
-          echo "${{ secrets.PROD.EC2_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa                 # Required for SSH to work
-          ssh-keyscan -H ${{ secrets.PROD.EC2_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
           # Adds the EC2 server to known_hosts to avoid prompt
 
       - name: 📤 Deploy Backend Code to EC2
         run: |
-          rsync -avz ./backend/ ${{ secrets.PROD.EC2_USER }}@${{ secrets.PROD.EC2_HOST }}:/home/ubuntu/myapp/backend/
+          rsync -avz ./backend/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/ubuntu/myapp/backend/
           # Transfers backend code via rsync to EC2
 
       - name: 🚀 Restart Backend Service on EC2
         run: |
-          ssh ${{ secrets.PROD.EC2_USER }}@${{ secrets.PROD.EC2_HOST }} << 'EOF'
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd /home/ubuntu/myapp/backend
             npm install --omit=dev                  # Install dependencies (prod only)
             pm2 restart backend || pm2 start index.js --name backend
