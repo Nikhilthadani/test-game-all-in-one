@@ -4,5 +4,5 @@ const server = http.createServer();
 server.on("request", (req, res) => {
   res.end("SERVER OK!");
 });
-
-server.listen(80);
+const PORT = process.env.PORT || 4000;
+server.listen(PORT);
