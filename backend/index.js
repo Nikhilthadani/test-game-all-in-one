@@ -5,4 +5,4 @@ server.on("request", (req, res) => {
   res.end("SERVER OK!");
 });
 
-server.listen(5000);
+server.listen(80);
