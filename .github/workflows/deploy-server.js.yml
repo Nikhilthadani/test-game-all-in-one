@@ -35,7 +35,7 @@ jobs:
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd /home/ubuntu/myapp/backend
-            npm install --omit=dev                  # Install dependencies (prod only)
+            npm ci --omit=dev 
             pm2 restart backend || pm2 start ./backend/index.js --name backend
             # Restart backend server using PM2, or start it if not running
           EOF
