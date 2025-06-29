@@ -10,6 +10,7 @@ jobs:
 
     name: Deploy Backend
     runs-on: ubuntu-latest
+    environment: PROD
 
     steps:
       - name: ✅ Checkout Code
