@@ -3,10 +3,11 @@ name: 🚀 Deploy Backend to EC2
 on:
   push:
     branches:
-      - server # Trigger only on backend branch pushes
+      - server  # Trigger only on backend branch pushes
 
 jobs:
   deploy:
+
     name: Deploy Backend
     runs-on: ubuntu-latest
 
@@ -14,7 +15,8 @@ jobs:
       - name: ✅ Checkout Code
         uses: actions/checkout@v3
         # Checks out current commit from the backend branch
-
+      - name: 🧪 Debug EC2 Host
+        run: echo "${{ secrets.PROD.EC2_HOST }}"
       - name: 🔐 Setup SSH Access
         run: |
           mkdir -p ~/.ssh                         # Create SSH folder on GitHub runner
